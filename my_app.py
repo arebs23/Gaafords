@@ -4,7 +4,7 @@ import os
 import pandas as pd
 
 def main():
-    st.title('Image Processing App')
+    st.title('Imagined effects')
 
     # Get the list of subdirectories
     parent_folder_path = 'ecai_effect'

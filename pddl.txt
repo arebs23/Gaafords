@@ -1,0 +1,114 @@
+\n   "Break": "Broken(bottle)",\n  
+ "Peel": "Peeled(onion)",\n 
+   "Cut": "Cut(apple)",\n  
+    "Place": "In(bowl, eggs)"\n}'
+
+
+
+
+
+{\n  "BreakBottle": 
+{\n    "effect": [\n      {"predicate": "At", "args": ["knife", "broken_glass_bottle"]},\n      {"predicate": "NotAt", "args": ["knife", "glass_bottle"]}\n    ]\n  },\n 
+
+ "PeelOnion": {\n    "effect": [\n      {"predicate": "At", "args": ["knife", "peeled_onion"]},\n      {"predicate": "NotAt", "args": ["knife", "onion"]}\n    ]\n  },\n  
+ "CutApple": {\n    "effect": [\n      {"predicate": "At", "args": ["knife", "cut_apple"]},\n      {"predicate": "NotAt", "args": ["knife", "apple"]}\n    ]\n  },\n 
+  "PlaceEggs": {\n    "effect": [\n      {"predicate": "At", "args": ["eggs_in_bowl", "bowl"]},\n      {"predicate": "NotAt", "args": ["eggs", "bowl"]}\n    ]\n  }\n}'
+
+
+
+
+  {\n  "BreakBottle": ["Broken glassBottle"],\n 
+   "PeelOnion": ["Peeled onion"],\n  
+   "CutApple": ["Cut apple"],\n  
+   "PlaceEggs": ["In bowl eggs"]\n}
+
+   
+   query_template =  f"""Imagine you're in a {environment} with {objects}. 
+ What are the impossible interactions between these objects? Specify answer by giving names of Action, object performed on, instrument used to perform the action and the effect on the object. An example is:
+   ###Action:Peel
+   Performed on: Onion 
+   Instrument: Apple
+   Effect: no change### 
+   
+ 2. from the pddl format extract effect and action return in dictionary with keys as action, effect"""
+
+   
+   
+   
+
+   '1. Action: Crack\n   Performed on: Eggs\n   Instrument: Knife\n   Effect: Cracked eggs\n\
+   n2. Action: Smash\n   Performed on: Glass bottle\n   Instrument: Knife\n   Effect: Broken glass bottle\n\
+   n3. Action: Chop\n   Performed on: Onion\n   Instrument: Knife\n   Effect: Chopped onion\n
+   \n4. Action: Slice\n   Performed on: Apple\n   Instrument: Knife\n   Effect: Sliced apple\n\
+   n5. Action: Mix\n   Performed on: Eggs, Onion\n   Instrument: Bowl\n   Effect: Mixed eggs and onion\n\
+   n6. Action: Store\n   Performed on: Eggs\n   Instrument: Bowl\n   Effect: Stored eggs in the bowl\n
+   \n7. Action: Store\n   Performed on: Onion\n   Instrument: Bowl\n   Effect: Stored chopped onion in the bowl\n
+   \n8. Action: Store\n   Performed on: Apple\n   Instrument: Bowl\n   Effect: Stored sliced apple in the bowl
+
+
+'Action: Crack\nPerformed on: Glass bottle\nInstrument: Knife\nEffect: The glass bottle remains intact, as it cannot be cracked with a knife.
+\n\nAction: Slice\nPerformed on: Glass bottle\nInstrument: Knife\nEffect: The glass bottle cannot be sliced with a knife, as it will shatter instead.
+\n\nAction: Peel\nPerformed on: Glass bottle\nInstrument: Onion\nEffect: The glass bottle cannot be peeled with an onion, as it is not a peelable object.
+\n\nAction: Cut\nPerformed on: Glass bottle\nInstrument: Apple\nEffect: The glass bottle cannot be cut with an apple, as it is not a sharp enough instrument.
+\n\nAction: Peel\nPerformed on: Apple\nInstrument: Glass bottle\nEffect: The apple cannot be peeled with a glass bottle, as it is not a suitable instrument for peeling.
+\n\nAction: Crack\nPerformed on: Apple\nInstrument: Knife\nEffect: The apple remains intact, as it cannot be cracked with a knife.
+\n\nAction: Slice\nPerformed on: Apple\nInstrument: Glass bottle\nEffect: The apple cannot be sliced with a glass bottle, as it is not a suitable instrument for slicing.
+\n\nAction: Peel\nPerformed on: Apple\nInstrument: Onion\nEffect: The apple cannot be peeled with an onion, as it is not a suitable instrument for peeling.
+\n\nAction: Cut\nPerformed on: Apple\nInstrument: Glass bottle\nEffect: The apple cannot be cut with a glass bottle, as it is not a suitable instrument for cutting.
+
+[{'label': 1, 'prompt': 'A table top with a knife, tomato, glass bottle and an egg, orange, apple.'}, {'label': 2, 'prompt': 'A bowl, a spoon and an open pot on a wooden table top.'}, {'label': 3, 'prompt': 'An orange on a porcelain plate, a mug and a glass bottle separate on a table top.'}, {'label': 4, 'prompt': 'A pan with a fried egg, a spoon and a mug on a wooden table top.'}, {'label': 5, 'prompt': 'A cup, a plate and a knife on a table top with a white tablecloth.'}, {'label': 6, 'prompt': 'A bowl of fruit, a glass bottle and a spoon on a wooden table top.'}, {'label': 7, 'prompt': 'A tomato on a porcelain plate, a mug and a glass bottle separate on a table top.'}, {'label': 8, 'prompt': 'A pan with a fried egg, a spoon and a mug on a wooden table top.'}, {'label': 9, 'prompt': 'A cup, a plate and a knife on a table top with a red tablecloth.'}, {'label': 10, 'prompt': 'A bowl of fruit, a glass bottle and a spoon on a wooden table top.'}]
+
+
+{'label': 1, 'prompt': 'A tabletop kitchen with a pot, plate, apple, tomato, and a knife.'}, {'label': 2, 'prompt': 'A bowl, mug, and an apple on a tabletop kitchen counter.'}, {'label': 3, 'prompt': 'An apple on a plate, a knife, and a mug separate on a tabletop kitchen.'}, {'label': 4, 'prompt': 'A tabletop kitchen with a bowl, plate, tomato, and a mug.'}, {'label': 5, 'prompt': 'A pot, knife, and a bowl on a tabletop kitchen counter.'}, {'label': 6, 'prompt': 'An apple, tomato, and a mug separate on a tabletop kitchen.'}, {'label': 7, 'prompt': 'A tabletop kitchen with a plate, knife, and a mug.'}, {'label': 8, 'prompt': 'A pot, apple, and a bowl on a tabletop kitchen counter.'}, {'label': 9, 'prompt': 'An apple on a plate, a tomato, and a mug separate on a tabletop kitchen.'}, {'label': 10, 'prompt': 'A tabletop kitchen with a pot, knife, and a bowl.'}]
+
+[{'label': 1, 'prompt': 'A cluttered office desk with a pencil, laptop, book, scissors, water bottle, and mug.'}, {'label': 2, 'prompt': 'A laptop, book, and water bottle on a wooden desk in an office.'}, {'label': 3, 'prompt': 'An open book on a wooden desk, a pencil, and a mug on a coaster in an office.'}, {'label': 4, 'prompt': 'A water bottle on a glass desk, a laptop, and a pair of scissors in an office.'}, {'label': 5, 'prompt': 'A mug, a book, and a pencil on a wooden desk in an office.'}, {'label': 6, 'prompt': 'A laptop, a water bottle, and a pair of scissors on a glass desk in an office.'}, {'label': 7, 'prompt': 'A book on a wooden desk, a pencil, and a mug on a coaster in an office.'}, {'label': 8, 'prompt': 'A water bottle on a glass desk, a laptop, and a pair of scissors in an office.'}, {'label': 9, 'prompt': 'A mug, a book, and a pencil on a wooden desk in an office.'}, {'label': 10, 'prompt': 'A laptop, a water bottle, and a pair of scissors on a glass desk in an office.'}]
+
+[{'label': 1, 'prompt': 'A garden with an axe, rake and a flower pot, hoe, bucket.'}, {'label': 2, 'prompt': 'A hoe, a bucket and an axe on a garden rake.'}, {'label': 3, 'prompt': 'An axe on a garden, a flower pot and a rake separate.'}, {'label': 4, 'prompt': 'A garden with a bucket, hoe and a flower pot, axe, rake.'}, {'label': 5, 'prompt': 'A rake, a flower pot and an axe on a garden bucket.'}, {'label': 6, 'prompt': 'An axe on a garden, a rake and a hoe separate.'}, {'label': 7, 'prompt': 'A garden with a flower pot, bucket and a hoe, axe, rake.'}, {'label': 8, 'prompt': 'A hoe, a bucket and an axe on a garden flower pot.'}, {'label': 9, 'prompt': 'An axe on a garden, a hoe and a rake separate.'}, {'label': 10, 'prompt': 'A garden with a bucket, flower pot and a rake, hoe, axe.'}]
+
+[{'label': 1, 'prompt': 'A garage scene with a wheelbarrow, hammer, nail, and a garbage can.'}, {'label': 2, 'prompt': 'A hammer, nail, and garbage can on a wheelbarrow in a garage.'}, {'label': 3, 'prompt': 'An empty wheelbarrow with a hammer and garbage can on the side in a garage.'}, {'label': 4, 'prompt': 'A garage scene with a hammer, nail, garbage can, and wheelbarrow in the background.'}, {'label': 5, 'prompt': 'A nail on a wheelbarrow with a garbage can and hammer nearby in a garage.'}, {'label': 6, 'prompt': 'A hammer, garbage can, and nail separate on the floor of a garage.'}, {'label': 7, 'prompt': 'A garage scene with a garbage can, wheelbarrow, and hammer in the foreground and a nail in the background.'}, {'label': 8, 'prompt': 'A wheelbarrow with a hammer and garbage can on top and a nail nearby in a garage.'}, {'label': 9, 'prompt': 'A hammer, nail, and garbage can arranged neatly on a shelf in a garage.'}, {'label': 10, 'prompt': 'A garage scene with a wheelbarrow, garbage can, and hammer in the foreground and a nail on the wall in the background.'}]
+
+
+[{'label': 1, 'prompt': 'A garage scene with a wheelbarrow, hammer, nail, and a garbage can.'}, {'label': 2, 'prompt': 'A hammer, nail, and garbage can on a wheelbarrow in a garage.'}, {'label': 3, 'prompt': 'An empty wheelbarrow with a hammer and garbage can on the side in a garage.'}, {'label': 4, 'prompt': 'A garage scene with a hammer, nail, garbage can, and wheelbarrow in the background.'}, {'label': 5, 'prompt': 'A nail on a wheelbarrow with a garbage can and hammer nearby in a garage.'}, {'label': 6, 'prompt': 'A hammer, garbage can, and nail separate on the floor of a garage.'}, {'label': 7, 'prompt': 'A garage scene with a garbage can, wheelbarrow, and hammer in the foreground and a nail in the background.'}, {'label': 8, 'prompt': 'A wheelbarrow with a hammer and garbage can on top and a nail nearby in a garage.'}, {'label': 9, 'prompt': 'A hammer, nail, and garbage can arranged neatly on a shelf in a garage.'}, {'label': 10, 'prompt': 'A garage scene with a wheelbarrow, garbage can, and hammer in the foreground and a nail on the wall in the background.'}]
+
+
+
+
+
+
+
+
+
+
+
+
+
+'Possible interactions between the objects on the tabletop could include:\n\n###Action: Place\nPerformed on: Apple\nInstrument: Hand\nEffect: Apple placed on tabletop\n\n###Action: Place\nPerformed on: Plate\nInstrument: Hand\nEffect: Plate placed on tabletop\n\n###Action: Place\nPerformed on: Bowl\nInstrument: Hand\nEffect: Bowl placed on tabletop\n\n###Action: Stack\nPerformed on: Plate\nInstrument: Hand\nEffect: Plate stacked on top of bowl\n\n###Action: Stack\nPerformed on: Bowl\nInstrument: Hand\nEffect: Bowl stacked underneath plate\n\n###Action: Arrange\nPerformed on: Apple\nInstrument: Hand\nEffect: Apple arranged on plate\n\n###Action: Arrange\nPerformed on: Apple\nInstrument: Hand\nEffect: Apple arranged in bowl\n\n###Action: Move\nPerformed on: Apple\nInstrument: Hand\nEffect: Apple moved from plate to bowl\n\n###Action: Move\nPerformed on: Apple\nInstrument: Hand\nEffect: Apple moved from bowl to plate\n\n###Action: Remove\nPerformed on: Apple\nInstrument: Hand\nEffect: Apple removed from plate\n\n###Action: Remove\nPerformed on: Apple\nInstrument: Hand\nEffect: Apple removed from bowl'
+
+
+'A table top with a knife, tomato, glass bottle and an egg, orange.'}, {'label': 2, 'prompt': 'A bowl, a spoon and an apple on a wooden table top.'}, {'label': 3, 'prompt': 'An open pot on a stove, a pan and a plate separate on a table top.'}, {'label': 4, 'prompt': 'A mug, a spoon and a porcelain on a table top.'}, {'label': 5, 'prompt': 'A cup, a knife and an orange on a table top.'}, {'label': 6, 'prompt': 'A plate, a glass bottle and a tomato on a wooden table top.'}, {'label': 7, 'prompt': 'A bowl, a spoon and a mug on a table top.'}, {'label': 8, 'prompt': 'An egg on a plate, a glass bottle and a spoon on a table top.'}, {'label': 9, 'prompt': 'A pan, a knife and an apple on a wooden table top.'}, {'label': 10, 'prompt': 'A cup, a spoon and a tomato on a table top.'}]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

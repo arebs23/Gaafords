@@ -7,7 +7,7 @@ def main():
     st.title('Image Processing App')
 
     # Get the list of subdirectories
-    parent_folder_path = '/home/aregbs/Desktop/gibson-afford/gen_data/ecai_effect'
+    parent_folder_path = 'ecai_effect'
     subdirectories = [d for d in os.listdir(parent_folder_path) if os.path.isdir(os.path.join(parent_folder_path, d))]
 
     # Initialize session state

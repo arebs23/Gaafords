@@ -14,7 +14,7 @@ import argparse
 from config import CLASSES
 
 
-os.environ['OPENAI_API_KEY'] = "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"
+os.environ['OPENAI_API_KEY'] = ""
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
 HOME = "/home/aregbs/Desktop/gibson-afford"

@@ -37,12 +37,13 @@ def main():
             # Get the image's filename (without the extension) to use as the caption
             filename_without_ext = os.path.splitext(os.path.basename(images[i]))[0]
             col.image(current_images[i], caption=f"Image: {filename_without_ext}", use_column_width=True)
-            if col.button("Yes", key=f"Yes{st.session_state.current_subdir_index}_{i}"):
-                st.session_state.yes_score[st.session_state.current_subdir_index] += 1
-                col.write("User said YES.")
-            if col.button("No", key=f"No{st.session_state.current_subdir_index}_{i}"):
-                st.session_state.no_score[st.session_state.current_subdir_index] += 1
-                col.write("User said NO.")
+            if 'original' not in filename_without_ext:
+                if col.button("Yes", key=f"Yes{st.session_state.current_subdir_index}_{i}"):
+                    st.session_state.yes_score[st.session_state.current_subdir_index] += 1
+                    col.write("User said YES.")
+                if col.button("No", key=f"No{st.session_state.current_subdir_index}_{i}"):
+                    st.session_state.no_score[st.session_state.current_subdir_index] += 1
+                    col.write("User said NO.")
 
     total_votes = sum(st.session_state.yes_score) + sum(st.session_state.no_score)
     if total_votes > 0:

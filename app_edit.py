@@ -6,7 +6,7 @@ import pandas as pd
 import io
 
 def main():
-    st.title('Image Processing App')
+    st.title('Generating Object to Object Relational Affordance')
 
     # Get the list of subdirectories
     parent_folder_path = 'ecai_effect'

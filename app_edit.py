@@ -2,12 +2,14 @@ import streamlit as st
 from PIL import Image
 import os
 import pandas as pd
+import matplotlib.pyplot as plt
+import io
 
 def main():
-    st.title('Imagined effects')
+    st.title('Image Processing App')
 
     # Get the list of subdirectories
-    parent_folder_path = 'ecai_effect'
+    parent_folder_path = '/home/aregbs/Desktop/gibson-afford/gen_data/ecai_effect'
     subdirectories = [d for d in os.listdir(parent_folder_path) if os.path.isdir(os.path.join(parent_folder_path, d))]
 
     # Initialize session state
@@ -45,47 +47,63 @@ def main():
                     st.session_state.no_score[st.session_state.current_subdir_index] += 1
                     col.write("User said NO.")
 
-    total_votes = sum(st.session_state.yes_score) + sum(st.session_state.no_score)
-    if total_votes > 0:
-        avg_yes = sum(st.session_state.yes_score) / total_votes * 100
-        avg_no = sum(st.session_state.no_score) / total_votes * 100
-    else:
-        avg_yes = avg_no = 0
-
-    st.write(f"Yes Score: {sum(st.session_state.yes_score)} ({avg_yes:.2f}%)")
-    st.write(f"No Score: {sum(st.session_state.no_score)} ({avg_no:.2f}%)")
-
-    # Create a DataFrame for the bar chart
-    df = pd.DataFrame({
-        'Average': [avg_yes, avg_no]
-    }, index=['Yes', 'No'])
-
-    # Display the bar chart
-    st.bar_chart(df)
-
-    if st.button("Next"):
-        # Increment subdir index and rerun the script
-        if st.session_state.current_subdir_index < len(subdirectories) - 1:
-            st.session_state.current_subdir_index += 1
-            st.experimental_rerun()
-        else:
-            st.write("No more subdirectories to display.")
-    # Create a DataFrame from the session state variables
+    # Save user responses to a CSV file
     df_response = pd.DataFrame({
         'subdirectory': subdirectories,
         'yes_score': st.session_state.yes_score,
         'no_score': st.session_state.no_score
     })
-
-    # Save the DataFrame to a CSV file
     df_response.to_csv('response_scores.csv', index=False)
+
+    # Load existing responses, if any
+    if os.path.isfile('response_scores.csv'):
+        df_response = pd.read_csv('response_scores.csv')
+
+        total_yes_score = df_response['yes_score'].sum()
+        total_no_score = df_response['no_score'].sum()
+
+        total_votes = total_yes_score + total_no_score
+        if total_votes > 0:
+            avg_yes = total_yes_score / total_votes * 100
+            avg_no = total_no_score / total_votes * 100
+        else:
+            avg_yes = avg_no = 0
+
+        st.write(f"Yes Score: {total_yes_score} ({avg_yes:.2f}%)")
+        st.write(f"No Score: {total_no_score} ({avg_no:.2f}%)")
+
+        # Create a DataFrame for the bar chart
+        df = pd.DataFrame({
+            'Average': [avg_yes, avg_no]
+        }, index=['Yes', 'No'])
+
+        # Generate the bar chart using matplotlib
+        fig, ax = plt.subplots()
+        df.plot(kind='bar', ax=ax)
+
+        # Save the plot to a BytesIO object
+        buf = io.BytesIO()
+        plt.savefig(buf, format='png')
+        buf.seek(0)
+
+        # Use st.download_button to download the plot
+        st.download_button(
+            label="Download bar chart",
+            data=buf,
+            file_name='bar_chart.png',
+            mime='image/png'
+        )
+
+        # Display the bar chart
+        st.pyplot(fig)
+
+    if st.button("Next"):
+        # Increment subdirectory index and rerun the script
+        if st.session_state.current_subdir_index < len(subdirectories) - 1:
+            st.session_state.current_subdir_index += 1
+            st.experimental_rerun()
+        else:
+            st.write("No more subdirectories to display.")
 
 if __name__ == "__main__":
     main()
-
-
-
-
-
-
-

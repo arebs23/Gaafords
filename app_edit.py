@@ -78,8 +78,9 @@ def main():
         }, index=['Yes', 'No'])
 
         # Generate the bar chart using matplotlib
-        fig, ax = plt.subplots()
-        df.plot(kind='bar', ax=ax)
+        st.bar_chart(df)
+        # fig, ax = plt.subplots()
+        # df.plot(kind='bar', ax=ax)
 
         # Save the plot to a BytesIO object
         buf = io.BytesIO()
@@ -87,15 +88,15 @@ def main():
         buf.seek(0)
 
         # Use st.download_button to download the plot
-        st.download_button(
-            label="Download bar chart",
-            data=buf,
-            file_name='bar_chart.png',
-            mime='image/png'
-        )
+        # st.download_button(
+        #     label="Download bar chart",
+        #     data=buf,
+        #     file_name='bar_chart.png',
+        #     mime='image/png'
+        # )
 
-        # Display the bar chart
-        st.pyplot(fig)
+        # # Display the bar chart
+        # st.pyplot(fig)
 
     if st.button("Next"):
         # Increment subdirectory index and rerun the script

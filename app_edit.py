@@ -83,9 +83,9 @@ def main():
         # df.plot(kind='bar', ax=ax)
 
         # Save the plot to a BytesIO object
-        buf = io.BytesIO()
-        plt.savefig(buf, format='png')
-        buf.seek(0)
+        # buf = io.BytesIO()
+        # plt.savefig(buf, format='png')
+        # buf.seek(0)
 
         # Use st.download_button to download the plot
         # st.download_button(
